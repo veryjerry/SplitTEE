@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Payment | Split Tee</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            max-width: 440px;
+            width: 100%;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+        }
+        .header {
+            background: #1B4332;
+            color: white;
+            padding: 24px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .header p {
+            opacity: 0.8;
+            font-size: 14px;
+        }
+        .timer-bar {
+            background: #14532D;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        .timer-icon {
+            font-size: 24px;
+        }
+        .timer-text {
+            color: white;
+        }
+        .timer-text .label {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        .timer-text .time {
+            font-size: 28px;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+        }
+        .timer-bar.urgent {
+            background: #DC2626;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        .content {
+            padding: 24px;
+        }
+        .details-card {
+            background: #F9FAFB;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+        .course-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1B4332;
+            margin-bottom: 12px;
+        }
+        .detail-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            font-size: 14px;
+            color: #4B5563;
+        }
+        .detail-icon {
+            width: 20px;
+            text-align: center;
+        }
+        .divider {
+            height: 1px;
+            background: #E5E7EB;
+            margin: 16px 0;
+        }
+        .amount-section {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .amount-label {
+            font-size: 14px;
+            color: #6B7280;
+            margin-bottom: 4px;
+        }
+        .amount {
+            font-size: 48px;
+            font-weight: 700;
+            color: #1B4332;
+        }
+        .amount-breakdown {
+            font-size: 13px;
+            color: #9CA3AF;
+            margin-top: 8px;
+        }
+        .payment-form {
+            margin-bottom: 20px;
+        }
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+        #card-element {
+            padding: 14px;
+            border: 2px solid #E5E7EB;
+            border-radius: 10px;
+            transition: border-color 0.2s;
+        }
+        #card-element.StripeElement--focus {
+            border-color: #1B4332;
+        }
+        #card-element.StripeElement--invalid {
+            border-color: #DC2626;
+        }
+        .card-errors {
+            color: #DC2626;
+            font-size: 13px;
+            margin-top: 8px;
+            min-height: 20px;
+        }
+        .pay-btn {
+            width: 100%;
+            padding: 16px;
+            background: #1B4332;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .pay-btn:hover {
+            background: #14532D;
+            transform: translateY(-1px);
+        }
+        .pay-btn:disabled {
+            background: #9CA3AF;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .pay-btn .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .secure-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #9CA3AF;
+            margin-top: 16px;
+        }
+        .footer {
+            text-align: center;
+            padding: 16px;
+            background: #F9FAFB;
+            font-size: 12px;
+            color: #9CA3AF;
+        }
+        .footer a {
+            color: #1B4332;
+            text-decoration: none;
+        }
+        /* Status screens */
+        .status-screen {
+            display: none;
+            text-align: center;
+            padding: 40px 24px;
+        }
+        .status-screen.active {
+            display: block;
+        }
+        .status-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 40px;
+        }
+        .status-icon.success {
+            background: #D8F3DC;
+        }
+        .status-icon.error {
+            background: #FEE2E2;
+        }
+        .status-icon.expired {
+            background: #FEF3C7;
+        }
+        .status-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .status-message {
+            color: #6B7280;
+            margin-bottom: 24px;
+        }
+        .status-btn {
+            display: inline-block;
+            padding: 12px 32px;
+            background: #1B4332;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .progress-section {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid #E5E7EB;
+        }
+        .progress-title {
+            font-size: 14px;
+            color: #6B7280;
+            margin-bottom: 12px;
+        }
+        .progress-bar {
+            height: 8px;
+            background: #E5E7EB;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: #1B4332;
+            transition: width 0.5s;
+        }
+        .progress-text {
+            font-size: 13px;
+            color: #9CA3AF;
+            margin-top: 8px;
+        }
+        .loading-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 24px;
+        }
+        .loading-spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid #E5E7EB;
+            border-top-color: #1B4332;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Loading State -->
+        <div id="loading-state" class="loading-screen">
+            <div class="loading-spinner"></div>
+            <p style="color:#6B7280;">Loading payment details...</p>
+        </div>
+        
+        <!-- Payment Form -->
+        <div id="payment-state" style="display:none;">
+            <div class="header">
+                <h1>⛳ Split Tee</h1>
+                <p>Complete your group payment</p>
+            </div>
+            
+            <div class="timer-bar" id="timer-bar">
+                <span class="timer-icon">⏱️</span>
+                <div class="timer-text">
+                    <div class="label">Time remaining</div>
+                    <div class="time" id="timer">--:--</div>
+                </div>
+            </div>
+            
+            <div class="content">
+                <div class="details-card">
+                    <div class="course-name" id="course-name">Loading...</div>
+                    <div class="detail-row">
+                        <span class="detail-icon">📅</span>
+                        <span id="tee-date">--</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-icon">⏰</span>
+                        <span id="tee-time">--</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-icon">👤</span>
+                        <span id="player-name">--</span>
+                    </div>
+                </div>
+                
+                <div class="amount-section">
+                    <div class="amount-label">Your share</div>
+                    <div class="amount" id="amount">$--</div>
+                    <div class="amount-breakdown" id="breakdown"></div>
+                </div>
+                
+                <form id="payment-form" class="payment-form">
+                    <label class="form-label">Card details</label>
+                    <div id="card-element"></div>
+                    <div id="card-errors" class="card-errors"></div>
+                    
+                    <button type="submit" class="pay-btn" id="pay-btn">
+                        <span id="btn-text">Pay Now</span>
+                    </button>
+                </form>
+                
+                <div class="secure-badge">
+                    🔒 Secured by Stripe
+                </div>
+                
+                <div class="progress-section" id="progress-section" style="display:none;">
+                    <div class="progress-title">Group payment progress</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+                    </div>
+                    <div class="progress-text" id="progress-text">0 of 0 players paid</div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                Powered by <a href="https://splittee.com">Split Tee</a>
+            </div>
+        </div>
+        
+        <!-- Success State -->
+        <div id="success-state" class="status-screen">
+            <div class="status-icon success">✅</div>
+            <h2 class="status-title">Payment Complete!</h2>
+            <p class="status-message">You're all set for your round. Check your email for confirmation.</p>
+            <div style="background:#F9FAFB;padding:16px;border-radius:8px;margin-bottom:24px;">
+                <div style="font-size:14px;color:#6B7280;">Confirmation Code</div>
+                <div style="font-size:24px;font-weight:600;color:#1B4332;" id="confirmation-code">--</div>
+            </div>
+        </div>
+        
+        <!-- Already Paid State -->
+        <div id="already-paid-state" class="status-screen">
+            <div class="status-icon success">✅</div>
+            <h2 class="status-title">Already Paid</h2>
+            <p class="status-message">You've already completed payment for this round.</p>
+        </div>
+        
+        <!-- Expired State -->
+        <div id="expired-state" class="status-screen">
+            <div class="status-icon expired">⏰</div>
+            <h2 class="status-title">Payment Window Closed</h2>
+            <p class="status-message">The payment window has expired. All payments have been refunded.</p>
+        </div>
+        
+        <!-- Error State -->
+        <div id="error-state" class="status-screen">
+            <div class="status-icon error">❌</div>
+            <h2 class="status-title">Something went wrong</h2>
+            <p class="status-message" id="error-message">Please try again or contact support.</p>
+            <a href="javascript:location.reload()" class="status-btn">Try Again</a>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = window.location.origin;
+        const TOKEN = window.location.pathname.split('/pay/')[1];
+        
+        let stripe, elements, cardElement;
+        let paymentData = null;
+        let timerInterval = null;
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', init);
+        
+        async function init() {
+            try {
+                // Fetch payment data
+                const res = await fetch(`${API_BASE}/api/v1/payments/${TOKEN}`);
+                const data = await res.json();
+                
+                if (!res.ok) {
+                    throw new Error(data.error || 'Failed to load payment');
+                }
+                
+                if (data.alreadyPaid) {
+                    showState('already-paid-state');
+                    return;
+                }
+                
+                if (data.expired) {
+                    showState('expired-state');
+                    return;
+                }
+                
+                paymentData = data;
+                populateDetails(data);
+                
+                // Initialize Stripe
+                stripe = Stripe(data.stripePublicKey || 'pk_test_placeholder');
+                elements = stripe.elements();
+                cardElement = elements.create('card', {
+                    style: {
+                        base: {
+                            fontSize: '16px',
+                            color: '#1F2937',
+                            '::placeholder': { color: '#9CA3AF' }
+                        }
+                    }
+                });
+                cardElement.mount('#card-element');
+                
+                cardElement.on('change', (event) => {
+                    const errors = document.getElementById('card-errors');
+                    errors.textContent = event.error ? event.error.message : '';
+                });
+                
+                // Start timer if active
+                if (data.split.timerExpiresAt) {
+                    startTimer(new Date(data.split.timerExpiresAt));
+                }
+                
+                showState('payment-state');
+                
+            } catch (error) {
+                console.error('Init error:', error);
+                document.getElementById('error-message').textContent = error.message;
+                showState('error-state');
+            }
+        }
+        
+        function populateDetails(data) {
+            document.getElementById('course-name').textContent = data.split.courseName;
+            document.getElementById('tee-date').textContent = formatDate(data.split.teeDate);
+            document.getElementById('tee-time').textContent = formatTime(data.split.teeTime);
+            document.getElementById('player-name').textContent = data.player.name || data.player.email;
+            document.getElementById('amount').textContent = '$' + parseFloat(data.player.amount).toFixed(2);
+            
+            const greenFee = parseFloat(data.split.greenFee);
+            const cartFee = parseFloat(data.split.cartFee) || 0;
+            const platformFee = parseFloat(data.split.platformFee);
+            
+            let breakdown = `Green fee: $${greenFee.toFixed(2)}`;
+            if (cartFee > 0) breakdown += ` + Cart: $${cartFee.toFixed(2)}`;
+            breakdown += ` + Fee: $${platformFee.toFixed(2)}`;
+            document.getElementById('breakdown').textContent = breakdown;
+        }
+        
+        function startTimer(expiresAt) {
+            const timerEl = document.getElementById('timer');
+            const timerBar = document.getElementById('timer-bar');
+            
+            function update() {
+                const now = new Date();
+                const diff = expiresAt - now;
+                
+                if (diff <= 0) {
+                    clearInterval(timerInterval);
+                    showState('expired-state');
+                    return;
+                }
+                
+                const minutes = Math.floor(diff / 60000);
+                const seconds = Math.floor((diff % 60000) / 1000);
+                timerEl.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                
+                // Urgent when under 2 minutes
+                if (diff < 120000) {
+                    timerBar.classList.add('urgent');
+                }
+            }
+            
+            update();
+            timerInterval = setInterval(update, 1000);
+        }
+        
+        // Payment form submission
+        document.getElementById('payment-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const payBtn = document.getElementById('pay-btn');
+            const btnText = document.getElementById('btn-text');
+            
+            payBtn.disabled = true;
+            btnText.innerHTML = '<div class="spinner"></div> Processing...';
+            
+            try {
+                // Create payment intent
+                const intentRes = await fetch(`${API_BASE}/api/v1/payments/${TOKEN}/intent`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                const intentData = await intentRes.json();
+                
+                if (!intentRes.ok) {
+                    throw new Error(intentData.error || 'Failed to create payment');
+                }
+                
+                // Update timer if started
+                if (intentData.timerExpiresAt && !timerInterval) {
+                    startTimer(new Date(intentData.timerExpiresAt));
+                }
+                
+                // Confirm payment with Stripe
+                const { error, paymentIntent } = await stripe.confirmCardPayment(
+                    intentData.clientSecret,
+                    {
+                        payment_method: { card: cardElement }
+                    }
+                );
+                
+                if (error) {
+                    throw new Error(error.message);
+                }
+                
+                // Confirm with server
+                const confirmRes = await fetch(`${API_BASE}/api/v1/payments/${TOKEN}/confirm`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ paymentIntentId: paymentIntent.id })
+                });
+                
+                const confirmData = await confirmRes.json();
+                
+                if (!confirmRes.ok) {
+                    throw new Error(confirmData.error || 'Payment confirmation failed');
+                }
+                
+                // Success!
+                clearInterval(timerInterval);
+                document.getElementById('confirmation-code').textContent = paymentData.split.shortCode;
+                showState('success-state');
+                
+            } catch (error) {
+                console.error('Payment error:', error);
+                document.getElementById('card-errors').textContent = error.message;
+                payBtn.disabled = false;
+                btnText.textContent = 'Pay Now';
+            }
+        });
+        
+        function showState(stateId) {
+            document.querySelectorAll('#loading-state, #payment-state, #success-state, #already-paid-state, #expired-state, #error-state')
+                .forEach(el => el.style.display = 'none');
+            
+            const state = document.getElementById(stateId);
+            if (state.classList.contains('status-screen')) {
+                state.classList.add('active');
+                state.style.display = 'block';
+            } else {
+                state.style.display = 'block';
+            }
+        }
+        
+        function formatDate(dateStr) {
+            return new Date(dateStr).toLocaleDateString('en-US', {
+                weekday: 'long',
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric'
+            });
+        }
+        
+        function formatTime(timeStr) {
+            const [hours, minutes] = timeStr.split(':');
+            const hour = parseInt(hours);
+            const ampm = hour >= 12 ? 'PM' : 'AM';
+            const hour12 = hour % 12 || 12;
+            return `${hour12}:${minutes} ${ampm}`;
+        }
+    </script>
+</body>
+</html>

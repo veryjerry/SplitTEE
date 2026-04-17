@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Golf Course Demo - Split Tee Integration</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f8f9fa;
+      color: #333;
+    }
+    
+    /* Simulated course website header */
+    .course-header {
+      background: linear-gradient(135deg, #2d5016 0%, #4a7c23 100%);
+      color: white;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .course-logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .course-logo svg {
+      width: 40px;
+      height: 40px;
+    }
+    
+    .course-nav {
+      display: flex;
+      gap: 30px;
+    }
+    
+    .course-nav a {
+      color: rgba(255,255,255,0.9);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    
+    .course-nav a:hover {
+      color: white;
+    }
+    
+    /* Hero section */
+    .hero {
+      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)), 
+                  url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><rect fill="%234a7c23" width="1200" height="400"/><ellipse cx="600" cy="450" rx="800" ry="200" fill="%232d5016"/><circle cx="300" cy="150" r="80" fill="%23fff" opacity="0.1"/></svg>');
+      background-size: cover;
+      padding: 80px 40px;
+      text-align: center;
+      color: white;
+    }
+    
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 16px;
+    }
+    
+    .hero p {
+      font-size: 1.25rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    /* Booking section */
+    .booking-section {
+      max-width: 800px;
+      margin: -40px auto 60px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      padding: 40px;
+    }
+    
+    .booking-section h2 {
+      font-size: 1.5rem;
+      margin-bottom: 30px;
+      color: #1B4332;
+    }
+    
+    .booking-form {
+      display: grid;
+      gap: 20px;
+    }
+    
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .form-group label {
+      font-weight: 600;
+      color: #555;
+      font-size: 0.9rem;
+    }
+    
+    .form-group input,
+    .form-group select {
+      padding: 14px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.2s;
+    }
+    
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #4a7c23;
+    }
+    
+    /* Pricing summary */
+    .pricing-summary {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 24px;
+      margin-top: 20px;
+    }
+    
+    .pricing-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .pricing-row:last-child {
+      border-bottom: none;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #1B4332;
+      padding-top: 16px;
+    }
+    
+    /* Payment buttons */
+    .payment-buttons {
+      display: flex;
+      gap: 16px;
+      margin-top: 30px;
+    }
+    
+    .btn {
+      flex: 1;
+      padding: 18px 24px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .btn-primary {
+      background: #4a7c23;
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: #3d6a1c;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(74, 124, 35, 0.3);
+    }
+    
+    .btn-split {
+      background: linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%);
+      color: white;
+    }
+    
+    .btn-split:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(27, 67, 50, 0.4);
+    }
+    
+    .btn-split svg {
+      width: 24px;
+      height: 24px;
+    }
+    
+    /* Integration code section */
+    .integration-demo {
+      max-width: 900px;
+      margin: 60px auto;
+      padding: 0 40px;
+    }
+    
+    .integration-demo h2 {
+      font-size: 1.75rem;
+      color: #1B4332;
+      margin-bottom: 12px;
+    }
+    
+    .integration-demo > p {
+      color: #666;
+      margin-bottom: 30px;
+    }
+    
+    .code-tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: -1px;
+    }
+    
+    .code-tab {
+      padding: 12px 24px;
+      background: #e0e0e0;
+      border: none;
+      border-radius: 8px 8px 0 0;
+      font-weight: 600;
+      cursor: pointer;
+      color: #666;
+    }
+    
+    .code-tab.active {
+      background: #1B4332;
+      color: white;
+    }
+    
+    .code-block {
+      background: #1B4332;
+      border-radius: 0 12px 12px 12px;
+      padding: 24px;
+      overflow-x: auto;
+    }
+    
+    .code-block pre {
+      margin: 0;
+      font-family: 'Monaco', 'Menlo', monospace;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: #D8F3DC;
+    }
+    
+    .code-block .comment { color: #74C69D; }
+    .code-block .string { color: #95D5B2; }
+    .code-block .keyword { color: #B7E4C7; }
+    .code-block .attr { color: #52B788; }
+    
+    /* Events log */
+    .events-section {
+      max-width: 900px;
+      margin: 40px auto 60px;
+      padding: 0 40px;
+    }
+    
+    .events-section h3 {
+      font-size: 1.25rem;
+      color: #1B4332;
+      margin-bottom: 16px;
+    }
+    
+    .events-log {
+      background: #f8f9fa;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 20px;
+      min-height: 150px;
+      font-family: 'Monaco', 'Menlo', monospace;
+      font-size: 0.85rem;
+    }
+    
+    .event-item {
+      padding: 8px 0;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      gap: 12px;
+    }
+    
+    .event-item:last-child {
+      border-bottom: none;
+    }
+    
+    .event-time {
+      color: #888;
+      min-width: 90px;
+    }
+    
+    .event-type {
+      font-weight: 600;
+      color: #1B4332;
+      min-width: 140px;
+    }
+    
+    .event-data {
+      color: #555;
+    }
+    
+    .no-events {
+      color: #888;
+      font-style: italic;
+    }
+    
+    /* Footer */
+    .demo-footer {
+      background: #1B4332;
+      color: rgba(255,255,255,0.8);
+      text-align: center;
+      padding: 30px;
+      font-size: 0.9rem;
+    }
+    
+    .demo-footer a {
+      color: #D8F3DC;
+    }
+  </style>
+</head>
+<body>
+  <!-- Simulated Golf Course Website -->
+  <header class="course-header">
+    <div class="course-logo">
+      <svg viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="18" stroke="white" stroke-width="2"/>
+        <circle cx="20" cy="15" r="4" fill="white"/>
+        <path d="M20 19 L20 35" stroke="white" stroke-width="2"/>
+        <path d="M14 35 L26 35" stroke="white" stroke-width="2"/>
+      </svg>
+      Pinewood Golf Club
+    </div>
+    <nav class="course-nav">
+      <a href="#">Tee Times</a>
+      <a href="#">Membership</a>
+      <a href="#">Events</a>
+      <a href="#">Pro Shop</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Book Your Tee Time</h1>
+    <p>Experience championship golf at Michigan's premier course</p>
+  </section>
+
+  <section class="booking-section">
+    <h2>Reserve Your Round</h2>
+    
+    <form class="booking-form" id="bookingForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Date</label>
+          <input type="date" id="teeDate" required>
+        </div>
+        <div class="form-group">
+          <label>Tee Time</label>
+          <select id="teeTime" required>
+            <option value="">Select time...</option>
+            <option value="07:00">7:00 AM</option>
+            <option value="07:30">7:30 AM</option>
+            <option value="08:00">8:00 AM</option>
+            <option value="08:30">8:30 AM</option>
+            <option value="09:00">9:00 AM</option>
+            <option value="09:30">9:30 AM</option>
+            <option value="10:00">10:00 AM</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Players</label>
+          <select id="players" required>
+            <option value="2">2 Players</option>
+            <option value="3">3 Players</option>
+            <option value="4" selected>4 Players</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" id="bookerName" placeholder="John Smith" required>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="bookerEmail" placeholder="john@example.com" required>
+        </div>
+        <div class="form-group">
+          <label>Phone</label>
+          <input type="tel" id="bookerPhone" placeholder="(555) 123-4567">
+        </div>
+      </div>
+      
+      <div class="pricing-summary">
+        <div class="pricing-row">
+          <span>Green Fees (4 × $75)</span>
+          <span>$300.00</span>
+        </div>
+        <div class="pricing-row">
+          <span>Cart Rental (2 × $25)</span>
+          <span>$50.00</span>
+        </div>
+        <div class="pricing-row">
+          <span>Total</span>
+          <span id="totalAmount">$350.00</span>
+        </div>
+      </div>
+      
+      <div class="payment-buttons">
+        <button type="button" class="btn btn-primary" onclick="payFull()">
+          Pay Full Amount
+        </button>
+        
+        <!-- Split Tee Integration Button -->
+        <button type="button" class="btn btn-split" id="splitPaymentBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M8 12h8M12 8v8"/>
+          </svg>
+          Split with Group
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <!-- Integration Demo -->
+  <section class="integration-demo">
+    <h2>🔧 Integration Code</h2>
+    <p>This is how Pinewood Golf Club integrated Split Tee. Copy this pattern for your course:</p>
+    
+    <div class="code-tabs">
+      <button class="code-tab active" onclick="showTab('simple')">Simple Embed</button>
+      <button class="code-tab" onclick="showTab('api')">API Mode</button>
+    </div>
+    
+    <div class="code-block" id="simpleCode">
+      <pre><span class="comment">&lt;!-- 1. Add the Split Tee SDK --&gt;</span>
+&lt;script src="<span class="string">https://js.splittee.com/v1.js</span>"&gt;&lt;/script&gt;
+
+<span class="comment">&lt;!-- 2. Initialize with your API key --&gt;</span>
+&lt;script&gt;
+  SplitTee.init({
+    <span class="attr">apiKey</span>: '<span class="string">sk_live_your_api_key</span>',
+    <span class="attr">onSuccess</span>: <span class="keyword">function</span>(split) {
+      console.log('<span class="string">Split created!</span>', split.shortCode);
+    },
+    <span class="attr">onError</span>: <span class="keyword">function</span>(error) {
+      console.error('<span class="string">Split failed:</span>', error);
+    }
+  });
+&lt;/script&gt;
+
+<span class="comment">&lt;!-- 3. Trigger split payment --&gt;</span>
+&lt;button onclick="<span class="keyword">openSplitPayment</span>()"&gt;Split with Group&lt;/button&gt;
+
+&lt;script&gt;
+  <span class="keyword">function</span> openSplitPayment() {
+    SplitTee.createSplit({
+      <span class="attr">amount</span>: <span class="string">35000</span>,        <span class="comment">// $350.00 in cents</span>
+      <span class="attr">players</span>: <span class="string">4</span>,
+      <span class="attr">teeTime</span>: '<span class="string">2025-04-20T09:00:00</span>',
+      <span class="attr">courseName</span>: '<span class="string">Pinewood Golf Club</span>',
+      <span class="attr">bookerEmail</span>: '<span class="string">john@example.com</span>',
+      <span class="attr">metadata</span>: { <span class="attr">bookingId</span>: '<span class="string">BK-12345</span>' }
+    });
+  }
+&lt;/script&gt;</pre>
+    </div>
+    
+    <div class="code-block" id="apiCode" style="display: none;">
+      <pre><span class="comment">// Server-side: Create split via API</span>
+<span class="keyword">const</span> response = <span class="keyword">await</span> fetch('<span class="string">https://api.splittee.com/v1/splits</span>', {
+  <span class="attr">method</span>: '<span class="string">POST</span>',
+  <span class="attr">headers</span>: {
+    '<span class="string">X-SplitTee-Key</span>': process.env.SPLITTEE_API_KEY,
+    '<span class="string">Content-Type</span>': '<span class="string">application/json</span>'
+  },
+  <span class="attr">body</span>: JSON.stringify({
+    <span class="attr">amount</span>: <span class="string">35000</span>,
+    <span class="attr">players</span>: [
+      { <span class="attr">email</span>: '<span class="string">player1@example.com</span>', <span class="attr">name</span>: '<span class="string">John</span>' },
+      { <span class="attr">email</span>: '<span class="string">player2@example.com</span>', <span class="attr">name</span>: '<span class="string">Mike</span>' },
+      { <span class="attr">email</span>: '<span class="string">player3@example.com</span>', <span class="attr">name</span>: '<span class="string">Sarah</span>' },
+      { <span class="attr">email</span>: '<span class="string">player4@example.com</span>', <span class="attr">name</span>: '<span class="string">Lisa</span>' }
+    ],
+    <span class="attr">teeTime</span>: '<span class="string">2025-04-20T09:00:00Z</span>',
+    <span class="attr">webhookUrl</span>: '<span class="string">https://yourcourse.com/webhooks/splittee</span>',
+    <span class="attr">metadata</span>: { <span class="attr">bookingId</span>: '<span class="string">BK-12345</span>' }
+  })
+});
+
+<span class="keyword">const</span> split = <span class="keyword">await</span> response.json();
+
+<span class="comment">// Returns payment links for each player</span>
+console.log(split.players);
+<span class="comment">// [</span>
+<span class="comment">//   { email: 'player1@...', paymentUrl: 'https://pay.splittee.com/abc123' },</span>
+<span class="comment">//   { email: 'player2@...', paymentUrl: 'https://pay.splittee.com/def456' },</span>
+<span class="comment">//   ...</span>
+<span class="comment">// ]</span></pre>
+    </div>
+  </section>
+
+  <!-- Events Log -->
+  <section class="events-section">
+    <h3>📡 SDK Events (Live)</h3>
+    <div class="events-log" id="eventsLog">
+      <div class="no-events">Waiting for events... Click "Split with Group" to see SDK events.</div>
+    </div>
+  </section>
+
+  <footer class="demo-footer">
+    <p>This is a demo integration page. <a href="https://splittee.com/docs">View full documentation →</a></p>
+    <p style="margin-top: 10px; opacity: 0.7;">Split Tee v2.1 © 2025 Dorn Ventures LLC</p>
+  </footer>
+
+  <!-- Split Tee SDK (would normally be loaded from CDN) -->
+  <script src="splittee.js"></script>
+  <script>
+    // Set default date to tomorrow
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    document.getElementById('teeDate').value = tomorrow.toISOString().split('T')[0];
+    
+    // Initialize Split Tee SDK
+    SplitTee.init({
+      apiKey: 'sk_demo_pinewood_golf_club',
+      testMode: true,
+      onSuccess: function(split) {
+        logEvent('split.created', `Short code: ${split.shortCode}`);
+      },
+      onTimerStarted: function(split) {
+        logEvent('timer.started', `Expires: ${new Date(split.expiresAt).toLocaleTimeString()}`);
+      },
+      onPaymentReceived: function(player) {
+        logEvent('payment.received', `${player.email} paid $${(player.amount / 100).toFixed(2)}`);
+      },
+      onComplete: function(split) {
+        logEvent('split.complete', 'All players have paid!');
+      },
+      onExpired: function(split) {
+        logEvent('split.expired', 'Timer expired, refunds initiated');
+      },
+      onError: function(error) {
+        logEvent('error', error.message);
+      },
+      onClose: function() {
+        logEvent('modal.closed', 'User closed the modal');
+      }
+    });
+    
+    // Split payment button handler
+    document.getElementById('splitPaymentBtn').addEventListener('click', function() {
+      const players = parseInt(document.getElementById('players').value);
+      const totalAmount = players * 7500 + Math.ceil(players / 2) * 2500; // $75 green fee + $25 cart per 2
+      const teeDate = document.getElementById('teeDate').value;
+      const teeTime = document.getElementById('teeTime').value;
+      const bookerName = document.getElementById('bookerName').value;
+      const bookerEmail = document.getElementById('bookerEmail').value;
+      
+      if (!teeDate || !teeTime || !bookerName || !bookerEmail) {
+        alert('Please fill in all required fields');
+        return;
+      }
+      
+      logEvent('sdk.createSplit', `${players} players, $${(totalAmount / 100).toFixed(2)} total`);
+      
+      SplitTee.createSplit({
+        amount: totalAmount,
+        players: players,
+        teeTime: `${teeDate}T${teeTime}:00`,
+        courseName: 'Pinewood Golf Club',
+        bookerName: bookerName,
+        bookerEmail: bookerEmail,
+        metadata: {
+          bookingId: 'DEMO-' + Date.now(),
+          greenFee: 75,
+          cartFee: 25
+        }
+      });
+    });
+    
+    // Full payment (simulated)
+    function payFull() {
+      alert('This would redirect to standard Stripe checkout for full payment.');
+    }
+    
+    // Event logging
+    function logEvent(type, data) {
+      const log = document.getElementById('eventsLog');
+      const noEvents = log.querySelector('.no-events');
+      if (noEvents) noEvents.remove();
+      
+      const time = new Date().toLocaleTimeString();
+      const item = document.createElement('div');
+      item.className = 'event-item';
+      item.innerHTML = `
+        <span class="event-time">${time}</span>
+        <span class="event-type">${type}</span>
+        <span class="event-data">${data}</span>
+      `;
+      log.insertBefore(item, log.firstChild);
+    }
+    
+    // Tab switching
+    function showTab(tab) {
+      document.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.code-block').forEach(b => b.style.display = 'none');
+      
+      event.target.classList.add('active');
+      document.getElementById(tab + 'Code').style.display = 'block';
+    }
+    
+    // Update pricing when players change
+    document.getElementById('players').addEventListener('change', function() {
+      const players = parseInt(this.value);
+      const greenFees = players * 75;
+      const cartFees = Math.ceil(players / 2) * 25;
+      const total = greenFees + cartFees;
+      
+      document.querySelector('.pricing-summary').innerHTML = `
+        <div class="pricing-row">
+          <span>Green Fees (${players} × $75)</span>
+          <span>$${greenFees.toFixed(2)}</span>
+        </div>
+        <div class="pricing-row">
+          <span>Cart Rental (${Math.ceil(players / 2)} × $25)</span>
+          <span>$${cartFees.toFixed(2)}</span>
+        </div>
+        <div class="pricing-row">
+          <span>Total</span>
+          <span id="totalAmount">$${total.toFixed(2)}</span>
+        </div>
+      `;
+    });
+  </script>
+</body>
+</html>

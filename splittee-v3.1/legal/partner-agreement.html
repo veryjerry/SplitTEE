@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course Partner Agreement | Split Tee</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #F8FAF9;
+      color: #1B4332;
+      line-height: 1.7;
+    }
+    .header {
+      background: linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%);
+      color: white;
+      padding: 60px 24px;
+      text-align: center;
+    }
+    .header h1 { font-size: 2.5rem; margin-bottom: 12px; }
+    .header p { opacity: 0.9; font-size: 1.1rem; }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+    .last-updated {
+      background: #D8F3DC;
+      padding: 16px 24px;
+      border-radius: 8px;
+      margin-bottom: 40px;
+      font-size: 0.95rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin: 40px 0 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #D8F3DC;
+    }
+    h3 { font-size: 1.15rem; margin: 24px 0 12px; }
+    p { margin-bottom: 16px; }
+    ul, ol {
+      margin: 16px 0 16px 24px;
+    }
+    li { margin-bottom: 8px; }
+    .highlight {
+      background: #D8F3DC;
+      padding: 16px 20px;
+      border-radius: 8px;
+      margin: 24px 0;
+    }
+    .important {
+      background: #FFF3CD;
+      padding: 16px 20px;
+      border-left: 4px solid #F4A261;
+      border-radius: 0 8px 8px 0;
+      margin: 24px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+    }
+    th, td {
+      border: 1px solid #D8F3DC;
+      padding: 12px 16px;
+      text-align: left;
+    }
+    th {
+      background: #D8F3DC;
+      font-weight: 600;
+    }
+    a { color: #2D6A4F; }
+    .footer {
+      background: #1B4332;
+      color: rgba(255,255,255,0.8);
+      text-align: center;
+      padding: 40px 24px;
+      margin-top: 60px;
+    }
+    .footer a { color: #D8F3DC; }
+    .exhibit {
+      background: #fff;
+      border: 2px solid #D8F3DC;
+      border-radius: 12px;
+      padding: 24px;
+      margin: 24px 0;
+    }
+    .exhibit h4 {
+      color: #2D6A4F;
+      margin-bottom: 16px;
+      font-size: 1.1rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <h1>Course Partner Agreement</h1>
+    <p>Terms and conditions for golf course integration with Split Tee</p>
+  </header>
+
+  <main class="container">
+    <div class="last-updated">
+      <strong>Last Updated:</strong> [DATE] | <strong>Effective Date:</strong> [DATE]
+    </div>
+
+    <p>This Course Partner Agreement ("Agreement") is entered into by and between Dorn Ventures LLC, a Michigan limited liability company doing business as Split Tee ("Company," "we," "us," or "our"), and the golf course or facility identified during registration ("Partner," "you," or "your").</p>
+
+    <p>By registering for a Split Tee partner account or integrating the Split Tee platform, you agree to be bound by this Agreement.</p>
+
+    <div class="highlight">
+      <strong>Partnership Summary:</strong> You integrate Split Tee on your booking site. Golfers split payments among their group. You receive 100% of your tee time price. We collect a 3% convenience fee ($2-$5) from each player.
+    </div>
+
+    <h2>1. Definitions</h2>
+    <ul>
+      <li><strong>"Platform"</strong> means the Split Tee payment splitting service, including APIs, widgets, dashboards, and related technology.</li>
+      <li><strong>"Integration"</strong> means the embedding of Split Tee functionality on Partner's website or booking system.</li>
+      <li><strong>"Split"</strong> means a payment arrangement where multiple golfers share the cost of a tee time.</li>
+      <li><strong>"Booker"</strong> means the individual who initiates a Split.</li>
+      <li><strong>"Player"</strong> means any individual participating in a Split, including the Booker.</li>
+      <li><strong>"Tee Time Price"</strong> means the total cost of the tee time as set by Partner.</li>
+      <li><strong>"Convenience Fee"</strong> means the fee charged by Company to Players for using the Platform.</li>
+    </ul>
+
+    <h2>2. Partner Registration</h2>
+    
+    <h3>2.1 Eligibility</h3>
+    <p>To become a Partner, you must:</p>
+    <ul>
+      <li>Operate a legitimate golf course, driving range, or golf facility</li>
+      <li>Have authority to enter into binding agreements on behalf of your organization</li>
+      <li>Maintain a valid Stripe Connect account</li>
+      <li>Comply with all applicable laws and regulations</li>
+    </ul>
+
+    <h3>2.2 Registration Process</h3>
+    <ol>
+      <li>Complete the online registration form with accurate information</li>
+      <li>Connect your Stripe account via Stripe Connect OAuth</li>
+      <li>Verify your email address and business information</li>
+      <li>Receive API credentials upon approval</li>
+    </ol>
+
+    <h3>2.3 Account Security</h3>
+    <p>You are responsible for:</p>
+    <ul>
+      <li>Maintaining the confidentiality of your API keys and credentials</li>
+      <li>All activity that occurs under your account</li>
+      <li>Immediately notifying us of any unauthorized access</li>
+      <li>Implementing reasonable security measures for your integration</li>
+    </ul>
+
+    <h2>3. Integration Requirements</h2>
+
+    <h3>3.1 Technical Integration</h3>
+    <p>You may integrate the Platform using:</p>
+    <ul>
+      <li><strong>Simple Embed:</strong> Add our JavaScript widget to your booking page</li>
+      <li><strong>API Mode:</strong> Call our API from your backend to create payment links</li>
+    </ul>
+
+    <h3>3.2 Required Information</h3>
+    <p>For each Split, you must provide:</p>
+    <ul>
+      <li>Accurate tee time date and time</li>
+      <li>Total price for the tee time (must match what you would charge directly)</li>
+      <li>Number of players in the group</li>
+      <li>Course name and any relevant booking reference</li>
+    </ul>
+
+    <div class="important">
+      <strong>Price Integrity:</strong> You must not inflate prices for Split Tee bookings compared to direct bookings. Violations may result in immediate termination.
+    </div>
+
+    <h3>3.3 Webhook Configuration</h3>
+    <p>You should configure webhooks to receive real-time notifications about:</p>
+    <ul>
+      <li>Split creation and timer start</li>
+      <li>Individual player payments</li>
+      <li>Split completion or expiration</li>
+      <li>Refund events</li>
+    </ul>
+
+    <h2>4. Payment Terms</h2>
+
+    <h3>4.1 Fee Structure</h3>
+    <table>
+      <tr>
+        <th>Fee Type</th>
+        <th>Amount</th>
+        <th>Paid By</th>
+      </tr>
+      <tr>
+        <td>Convenience Fee</td>
+        <td>3% of player's portion ($2 min, $5 max)</td>
+        <td>Each Player</td>
+      </tr>
+      <tr>
+        <td>Platform Fee to Partner</td>
+        <td>$0</td>
+        <td>N/A</td>
+      </tr>
+      <tr>
+        <td>Stripe Processing</td>
+        <td>Standard Stripe rates</td>
+        <td>Partner (from their portion)</td>
+      </tr>
+    </table>
+
+    <h3>4.2 Payment Flow</h3>
+    <ol>
+      <li>Players pay their portion plus convenience fee via Stripe</li>
+      <li>Convenience fees are retained by Company</li>
+      <li>Tee time amounts are transferred to your Stripe Connect account</li>
+      <li>Stripe's standard payout schedule applies to your account</li>
+    </ol>
+
+    <h3>4.3 Payment Modes</h3>
+    <ul>
+      <li><strong>Authorization Hold (≤6 days to tee time):</strong> Funds are held and captured at tee time</li>
+      <li><strong>Immediate Capture (>6 days to tee time):</strong> Funds are captured immediately</li>
+    </ul>
+
+    <h2>5. Partner Obligations</h2>
+
+    <h3>5.1 Booking Fulfillment</h3>
+    <p>You agree to:</p>
+    <ul>
+      <li>Honor all confirmed and fully-paid Splits at the stated price</li>
+      <li>Provide the same service quality as direct bookings</li>
+      <li>Not require additional payment from Players beyond the Split amount</li>
+      <li>Maintain accurate availability information</li>
+    </ul>
+
+    <h3>5.2 Customer Service</h3>
+    <p>You are responsible for:</p>
+    <ul>
+      <li>All course-related customer service (check-in, facility issues, weather policies)</li>
+      <li>Your own cancellation and refund policies for tee times</li>
+      <li>Communicating your policies clearly to golfers</li>
+    </ul>
+    <p>We handle all payment-related customer service for the Split Tee platform.</p>
+
+    <h3>5.3 Compliance</h3>
+    <p>You must comply with:</p>
+    <ul>
+      <li>All applicable laws and regulations</li>
+      <li>PCI-DSS requirements (handled via Stripe)</li>
+      <li>Consumer protection laws</li>
+      <li>Anti-discrimination laws</li>
+    </ul>
+
+    <h2>6. Company Obligations</h2>
+
+    <h3>6.1 Platform Services</h3>
+    <p>We will provide:</p>
+    <ul>
+      <li>Reliable payment processing infrastructure</li>
+      <li>Partner dashboard for managing splits and viewing analytics</li>
+      <li>Technical documentation and integration support</li>
+      <li>Real-time webhook notifications</li>
+    </ul>
+
+    <h3>6.2 Support</h3>
+    <p>We offer:</p>
+    <ul>
+      <li>Email support with 2 business day response time</li>
+      <li>Technical documentation and integration guides</li>
+      <li>Partner onboarding assistance</li>
+    </ul>
+
+    <h3>6.3 Uptime</h3>
+    <p>We target 99.9% platform availability but do not guarantee uninterrupted service. Scheduled maintenance will be communicated in advance when possible.</p>
+
+    <h2>7. Refunds and Cancellations</h2>
+
+    <h3>7.1 Automatic Refunds</h3>
+    <p>The Platform automatically refunds Players when:</p>
+    <ul>
+      <li>The payment timer expires before all Players pay</li>
+      <li>The Booker cancels before Split completion</li>
+      <li>You cancel or cannot fulfill the tee time</li>
+    </ul>
+
+    <h3>7.2 Partner-Initiated Refunds</h3>
+    <p>You may request refunds for Players through your dashboard when:</p>
+    <ul>
+      <li>The tee time is cancelled due to weather or course conditions</li>
+      <li>You choose to honor a cancellation request per your policies</li>
+      <li>A booking error occurred</li>
+    </ul>
+
+    <h3>7.3 Refund Responsibility</h3>
+    <p>For refunds you initiate after Split completion:</p>
+    <ul>
+      <li>The full tee time amount is refunded to Players</li>
+      <li>The convenience fee is NOT refunded (retained by Company)</li>
+      <li>You bear any Stripe fees associated with the refund</li>
+    </ul>
+
+    <h2>8. Data and Privacy</h2>
+
+    <h3>8.1 Data Sharing</h3>
+    <p>We share with you:</p>
+    <ul>
+      <li>Player names for the booking</li>
+      <li>Payment confirmation status</li>
+      <li>Booking reference information</li>
+    </ul>
+    <p>We do NOT share with you:</p>
+    <ul>
+      <li>Player payment card details</li>
+      <li>Player financial information</li>
+      <li>Data from other Partners</li>
+    </ul>
+
+    <h3>8.2 Data Use</h3>
+    <p>You may use Player data only for:</p>
+    <ul>
+      <li>Fulfilling the specific tee time booking</li>
+      <li>Communicating about the booking</li>
+      <li>Legal or compliance requirements</li>
+    </ul>
+    <p>You may NOT use Player data for marketing without separate consent from Players.</p>
+
+    <h3>8.3 Privacy Compliance</h3>
+    <p>Both parties agree to comply with applicable privacy laws and maintain appropriate data security measures.</p>
+
+    <h2>9. Intellectual Property</h2>
+
+    <h3>9.1 Company IP</h3>
+    <p>We retain all rights to the Platform, APIs, documentation, trademarks, and related intellectual property. Your right to use these is limited to the integration contemplated by this Agreement.</p>
+
+    <h3>9.2 Partner IP</h3>
+    <p>You retain all rights to your course name, branding, and content. You grant us a limited license to display your name and logo in connection with the Platform.</p>
+
+    <h3>9.3 Restrictions</h3>
+    <p>You may not:</p>
+    <ul>
+      <li>Reverse engineer or copy Platform technology</li>
+      <li>Use our trademarks without permission</li>
+      <li>Create competing services using our technology</li>
+      <li>Sublicense access to the Platform</li>
+    </ul>
+
+    <h2>10. Term and Termination</h2>
+
+    <h3>10.1 Term</h3>
+    <p>This Agreement begins upon account approval and continues until terminated by either party.</p>
+
+    <h3>10.2 Termination for Convenience</h3>
+    <p>Either party may terminate with 30 days written notice by email.</p>
+
+    <h3>10.3 Termination for Cause</h3>
+    <p>We may terminate immediately if you:</p>
+    <ul>
+      <li>Violate material terms of this Agreement</li>
+      <li>Engage in fraudulent activity</li>
+      <li>Fail to honor confirmed bookings</li>
+      <li>Inflate prices for Split Tee bookings</li>
+      <li>Have your Stripe account suspended or terminated</li>
+    </ul>
+
+    <h3>10.4 Effect of Termination</h3>
+    <p>Upon termination:</p>
+    <ul>
+      <li>Your API credentials will be deactivated</li>
+      <li>Pending Splits must be honored or refunded</li>
+      <li>Accrued payment obligations survive termination</li>
+      <li>You must remove Split Tee integrations from your site</li>
+    </ul>
+
+    <h2>11. Disclaimers</h2>
+    <p>THE PLATFORM IS PROVIDED "AS IS" WITHOUT WARRANTIES OF ANY KIND. WE DO NOT GUARANTEE UNINTERRUPTED SERVICE, ERROR-FREE OPERATION, OR SPECIFIC BUSINESS OUTCOMES.</p>
+
+    <p>We are not responsible for:</p>
+    <ul>
+      <li>Disputes between you and golfers</li>
+      <li>Your course operations or service quality</li>
+      <li>Third-party payment processor issues</li>
+      <li>Internet connectivity or browser compatibility</li>
+    </ul>
+
+    <h2>12. Limitation of Liability</h2>
+    <p>TO THE MAXIMUM EXTENT PERMITTED BY LAW, OUR TOTAL LIABILITY UNDER THIS AGREEMENT SHALL NOT EXCEED THE TOTAL CONVENIENCE FEES PROCESSED THROUGH YOUR ACCOUNT IN THE 12 MONTHS PRECEDING ANY CLAIM.</p>
+
+    <p>WE SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING LOST PROFITS OR BUSINESS OPPORTUNITIES.</p>
+
+    <h2>13. Indemnification</h2>
+    <p>You agree to indemnify and hold harmless Dorn Ventures LLC from any claims, damages, or expenses arising from:</p>
+    <ul>
+      <li>Your breach of this Agreement</li>
+      <li>Your operation of the golf course</li>
+      <li>Your violation of applicable laws</li>
+      <li>Disputes with golfers regarding course services</li>
+    </ul>
+
+    <h2>14. Dispute Resolution</h2>
+
+    <h3>14.1 Informal Resolution</h3>
+    <p>Before initiating formal proceedings, parties agree to attempt good faith resolution through direct communication.</p>
+
+    <h3>14.2 Arbitration</h3>
+    <p>Unresolved disputes shall be settled by binding arbitration in Oakland County, Michigan, under AAA Commercial Arbitration Rules.</p>
+
+    <h3>14.3 Governing Law</h3>
+    <p>This Agreement is governed by the laws of the State of Michigan.</p>
+
+    <h2>15. General Provisions</h2>
+    <ul>
+      <li><strong>Entire Agreement:</strong> This Agreement constitutes the entire understanding between the parties.</li>
+      <li><strong>Amendments:</strong> We may modify this Agreement with 30 days notice. Continued use constitutes acceptance.</li>
+      <li><strong>Severability:</strong> Invalid provisions do not affect the remainder of this Agreement.</li>
+      <li><strong>Assignment:</strong> You may not assign this Agreement without our consent.</li>
+      <li><strong>Independent Contractors:</strong> This Agreement does not create an employment, partnership, or agency relationship.</li>
+      <li><strong>Force Majeure:</strong> Neither party is liable for delays due to circumstances beyond reasonable control.</li>
+      <li><strong>Notices:</strong> Notices should be sent to the email addresses on file.</li>
+    </ul>
+
+    <h2>16. Contact Information</h2>
+    <p>For questions about this Agreement:</p>
+    <p>
+      <strong>Dorn Ventures LLC</strong><br>
+      Email: [PARTNERS EMAIL]<br>
+      Address: [BUSINESS ADDRESS]
+    </p>
+
+    <div class="exhibit">
+      <h4>Exhibit A: Integration Guidelines</h4>
+      <p>Technical integration documentation is available at [DOCS URL]. Partners must follow all technical requirements and best practices outlined therein.</p>
+    </div>
+
+    <div class="exhibit">
+      <h4>Exhibit B: Brand Guidelines</h4>
+      <p>When displaying Split Tee branding on your site:</p>
+      <ul>
+        <li>Use official logos and assets provided in the Partner dashboard</li>
+        <li>Do not modify colors, proportions, or design elements</li>
+        <li>Maintain minimum clear space around logos</li>
+        <li>Do not imply endorsement beyond the payment partnership</li>
+      </ul>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 Dorn Ventures LLC. All rights reserved.</p>
+    <p style="margin-top: 12px;">
+      <a href="terms.html">Terms of Service</a> · 
+      <a href="privacy.html">Privacy Policy</a> · 
+      <a href="refund-policy.html">Refund Policy</a>
+    </p>
+  </footer>
+</body>
+</html>

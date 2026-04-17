@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Service | Split Tee</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #F8FAF9;
+      color: #1B4332;
+      line-height: 1.7;
+    }
+    .header {
+      background: linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%);
+      color: white;
+      padding: 60px 24px;
+      text-align: center;
+    }
+    .header h1 { font-size: 2.5rem; margin-bottom: 12px; }
+    .header p { opacity: 0.9; font-size: 1.1rem; }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+    .last-updated {
+      background: #D8F3DC;
+      padding: 16px 24px;
+      border-radius: 8px;
+      margin-bottom: 40px;
+      font-size: 0.95rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin: 40px 0 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #D8F3DC;
+    }
+    h3 { font-size: 1.15rem; margin: 24px 0 12px; }
+    p { margin-bottom: 16px; }
+    ul, ol {
+      margin: 16px 0 16px 24px;
+    }
+    li { margin-bottom: 8px; }
+    .highlight {
+      background: #FFF3CD;
+      padding: 16px 20px;
+      border-left: 4px solid #F4A261;
+      border-radius: 0 8px 8px 0;
+      margin: 24px 0;
+    }
+    a { color: #2D6A4F; }
+    .footer {
+      background: #1B4332;
+      color: rgba(255,255,255,0.8);
+      text-align: center;
+      padding: 40px 24px;
+      margin-top: 60px;
+    }
+    .footer a { color: #D8F3DC; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <h1>Terms of Service</h1>
+    <p>Please read these terms carefully before using Split Tee</p>
+  </header>
+
+  <main class="container">
+    <div class="last-updated">
+      <strong>Last Updated:</strong> [DATE] | <strong>Effective Date:</strong> [DATE]
+    </div>
+
+    <p>Welcome to Split Tee! These Terms of Service ("Terms") govern your access to and use of the Split Tee payment splitting platform, website, APIs, and related services (collectively, the "Service") operated by Dorn Ventures LLC ("Company," "we," "us," or "our").</p>
+
+    <p>By accessing or using the Service, you agree to be bound by these Terms. If you do not agree to these Terms, do not use the Service.</p>
+
+    <h2>1. Definitions</h2>
+    <ul>
+      <li><strong>"Booker"</strong> means the individual who initiates a payment split for a golf tee time.</li>
+      <li><strong>"Player"</strong> means any individual invited to participate in a payment split, including the Booker.</li>
+      <li><strong>"Course Partner"</strong> means a golf course or facility that has integrated the Split Tee platform.</li>
+      <li><strong>"Split"</strong> means a payment arrangement where multiple Players share the cost of a tee time.</li>
+      <li><strong>"Payment Window"</strong> means the time period during which Players may complete their portion of a Split.</li>
+    </ul>
+
+    <h2>2. Service Description</h2>
+    <p>Split Tee provides a payment splitting service that allows groups of golfers to divide the cost of tee times booked through our Course Partner websites. The Service includes:</p>
+    <ul>
+      <li>Payment collection and processing through Stripe</li>
+      <li>Automated payment reminders and notifications</li>
+      <li>Time-limited Payment Windows with automatic refund processing</li>
+      <li>Course Partner dashboards and integration tools</li>
+    </ul>
+
+    <h2>3. User Eligibility</h2>
+    <p>To use the Service, you must:</p>
+    <ul>
+      <li>Be at least 18 years of age</li>
+      <li>Have the legal capacity to enter into binding agreements</li>
+      <li>Provide accurate and complete information</li>
+      <li>Have a valid payment method accepted by Stripe</li>
+    </ul>
+
+    <h2>4. Payment Terms</h2>
+    
+    <h3>4.1 Fees and Charges</h3>
+    <p>Split Tee charges a convenience fee of 3% of each Player's portion, with a minimum of $2.00 and a maximum of $5.00 per transaction. This fee is charged to each Player at the time of payment.</p>
+
+    <h3>4.2 Payment Processing</h3>
+    <p>All payments are processed through Stripe, Inc. By using the Service, you agree to Stripe's <a href="https://stripe.com/legal" target="_blank">Terms of Service</a>. We do not store your full payment card information on our servers.</p>
+
+    <h3>4.3 Payment Window</h3>
+    <div class="highlight">
+      <strong>Important:</strong> Each Split has a limited Payment Window (typically 10 minutes after confirmation). If all Players do not complete payment within the Payment Window, the Split will expire and all completed payments will be automatically refunded.
+    </div>
+
+    <h3>4.4 Authorization Holds</h3>
+    <p>For tee times within 6 days of the booking, we may place an authorization hold on your payment method rather than an immediate charge. The hold will be captured at the tee time or released if the Split expires or is cancelled.</p>
+
+    <h2>5. Refunds and Cancellations</h2>
+    
+    <h3>5.1 Automatic Refunds</h3>
+    <p>Refunds are automatically processed when:</p>
+    <ul>
+      <li>The Payment Window expires before all Players have paid</li>
+      <li>The Booker cancels the Split before completion</li>
+      <li>A Course Partner cancels the associated tee time</li>
+    </ul>
+
+    <h3>5.2 Refund Processing Time</h3>
+    <p>Refunds are initiated immediately but may take 5-10 business days to appear on your statement, depending on your financial institution.</p>
+
+    <h3>5.3 Convenience Fee Refunds</h3>
+    <p>Convenience fees are refunded in full when refunds are issued due to Split expiration or cancellation by the Course Partner. Fees are not refunded for voluntary cancellations after Split completion.</p>
+
+    <h2>6. Course Partner Terms</h2>
+    <p>Course Partners who integrate Split Tee agree to:</p>
+    <ul>
+      <li>Maintain an active Stripe Connect account in good standing</li>
+      <li>Honor all confirmed and fully-paid Splits</li>
+      <li>Provide accurate tee time and pricing information</li>
+      <li>Comply with applicable laws and regulations</li>
+      <li>Maintain the confidentiality of their API credentials</li>
+    </ul>
+
+    <h2>7. Prohibited Activities</h2>
+    <p>You may not:</p>
+    <ul>
+      <li>Use the Service for any unlawful purpose</li>
+      <li>Provide false or misleading information</li>
+      <li>Attempt to circumvent fees or security measures</li>
+      <li>Interfere with or disrupt the Service</li>
+      <li>Use automated systems to access the Service without permission</li>
+      <li>Engage in fraudulent payment activity</li>
+      <li>Resell or redistribute access to the Service</li>
+    </ul>
+
+    <h2>8. Intellectual Property</h2>
+    <p>The Service, including its design, features, and content, is owned by Dorn Ventures LLC and protected by copyright, trademark, and other intellectual property laws. You may not copy, modify, distribute, or create derivative works without our written permission.</p>
+
+    <h2>9. Privacy</h2>
+    <p>Your use of the Service is subject to our <a href="privacy.html">Privacy Policy</a>, which describes how we collect, use, and protect your information.</p>
+
+    <h2>10. Disclaimers</h2>
+    <p>THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED. WE DO NOT GUARANTEE THAT THE SERVICE WILL BE UNINTERRUPTED, ERROR-FREE, OR SECURE.</p>
+
+    <p>We are not responsible for:</p>
+    <ul>
+      <li>The availability or quality of tee times offered by Course Partners</li>
+      <li>Disputes between Players regarding payment splits</li>
+      <li>Actions or omissions of Course Partners</li>
+      <li>Third-party payment processing issues</li>
+    </ul>
+
+    <h2>11. Limitation of Liability</h2>
+    <p>TO THE MAXIMUM EXTENT PERMITTED BY LAW, DORN VENTURES LLC SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS OR REVENUES, WHETHER INCURRED DIRECTLY OR INDIRECTLY.</p>
+
+    <p>OUR TOTAL LIABILITY FOR ANY CLAIMS ARISING FROM YOUR USE OF THE SERVICE SHALL NOT EXCEED THE AMOUNT OF FEES YOU PAID TO US IN THE 12 MONTHS PRECEDING THE CLAIM.</p>
+
+    <h2>12. Indemnification</h2>
+    <p>You agree to indemnify and hold harmless Dorn Ventures LLC and its officers, directors, employees, and agents from any claims, damages, losses, or expenses arising from your use of the Service or violation of these Terms.</p>
+
+    <h2>13. Dispute Resolution</h2>
+    
+    <h3>13.1 Informal Resolution</h3>
+    <p>Before filing any formal dispute, you agree to contact us at [SUPPORT EMAIL] to attempt to resolve the matter informally.</p>
+
+    <h3>13.2 Arbitration</h3>
+    <p>Any disputes not resolved informally shall be resolved through binding arbitration in accordance with the rules of the American Arbitration Association. The arbitration shall take place in Oakland County, Michigan.</p>
+
+    <h3>13.3 Class Action Waiver</h3>
+    <p>You agree to resolve disputes with us on an individual basis and waive the right to participate in class actions.</p>
+
+    <h2>14. Modifications</h2>
+    <p>We may modify these Terms at any time. We will notify you of material changes via email or through the Service. Your continued use after such notice constitutes acceptance of the modified Terms.</p>
+
+    <h2>15. Termination</h2>
+    <p>We may suspend or terminate your access to the Service at any time for any reason, including violation of these Terms. Upon termination, your right to use the Service ceases immediately.</p>
+
+    <h2>16. General Provisions</h2>
+    <ul>
+      <li><strong>Governing Law:</strong> These Terms are governed by the laws of the State of Michigan.</li>
+      <li><strong>Severability:</strong> If any provision is found unenforceable, the remaining provisions remain in effect.</li>
+      <li><strong>Entire Agreement:</strong> These Terms constitute the entire agreement between you and us regarding the Service.</li>
+      <li><strong>Waiver:</strong> Failure to enforce any right does not waive that right.</li>
+      <li><strong>Assignment:</strong> You may not assign these Terms without our consent.</li>
+    </ul>
+
+    <h2>17. Contact Information</h2>
+    <p>For questions about these Terms, please contact us:</p>
+    <p>
+      <strong>Dorn Ventures LLC</strong><br>
+      Email: [LEGAL EMAIL]<br>
+      Address: [BUSINESS ADDRESS]
+    </p>
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 Dorn Ventures LLC. All rights reserved.</p>
+    <p style="margin-top: 12px;">
+      <a href="privacy.html">Privacy Policy</a> · 
+      <a href="refund-policy.html">Refund Policy</a> · 
+      <a href="partner-agreement.html">Partner Agreement</a>
+    </p>
+  </footer>
+</body>
+</html>
